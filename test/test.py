@@ -48,7 +48,7 @@ async def test_fifo_8bits(dut):
             f"Contador incorrecto: {used}"
         )
 
-        assert full == (cantidad == 4), (
+        assert full == (cantidad == 8), (
             "Error en FULL"
         )
 
@@ -74,7 +74,7 @@ async def test_fifo_8bits(dut):
     dut._log.info("RESET CORRECTO")
 
     # PRUEBA 2: ESCRIBIR 4 DATOS
-    datos = [25, 100, 200, 255]
+    datos = [25, 100, 200, 255, 300, 310, 320, 330]
 
     for cantidad, dato in enumerate(datos, 1):
 
