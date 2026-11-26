@@ -13,12 +13,12 @@ module tt_um_Fifo (
 );
 
     // FIFO de 4 posiciones de 8 bits.
-    reg [7:0] mem [0:3];
+    reg [7:0] mem [0:7];
 
     // Punteros y contador.
     reg [1:0] wr_ptr;
     reg [1:0] rd_ptr;
-    reg [2:0] used;
+    reg [7:0] used;
 
     // Registro de salida.
     reg [7:0] data_out;
@@ -42,7 +42,7 @@ module tt_um_Fifo (
     assign read_en  = uio_in[1];
 
     // BLOQUE 2. ESTADOS DE LA FIFO
-    assign full  = (used == 3'd4);
+    assign full  = (used == 3'd8);
     assign empty = (used == 3'd0);
 
     // BLOQUE 3. CONTROL DE OPERACIONES
@@ -55,7 +55,7 @@ module tt_um_Fifo (
         if (!rst_n) begin
             wr_ptr     <= 2'd0;
             rd_ptr     <= 2'd0;
-            used       <= 3'd0;
+            used       <= 7'd0;
             data_out   <= 8'd0;
             read_valid <= 1'b0;
         end
@@ -80,10 +80,10 @@ module tt_um_Fifo (
             case ({do_write, do_read})
 
                 2'b10:
-                    used <= used + 3'd1;
+                    used <= used + 7'd1;
 
                 2'b01:
-                    used <= used - 3'd1;
+                    used <= used - 7'd1;
 
                 default:
                     used <= used;
